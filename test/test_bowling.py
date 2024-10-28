@@ -48,3 +48,13 @@ class TestBowlingGame(unittest.TestCase):
 
         # Attempt to add an extra frame
         self.assertRaises(BowlingError, game.add_frame, Frame(1, 1))
+
+    def test_calculate_score(self):
+
+        game = BowlingGame()
+
+        # The total score should be 20
+        for i in range(10):
+            game.add_frame(Frame(1, 1))
+
+        self.assertEqual(20, game.calculate_score())
