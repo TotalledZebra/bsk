@@ -11,6 +11,10 @@ class BowlingGame:
         self.frames.append(frame)
 
     def get_frame_at(self, i: int) -> Frame:
+
+        if i < 0 or i >= len(self.frames):
+            raise BowlingError("tried to access frame out of bounds")
+
         return self.frames[i]
 
     def calculate_score(self) -> int:
