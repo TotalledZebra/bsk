@@ -6,7 +6,8 @@ class BowlingGame:
 
     def __init__(self):
         self.frames = []
-        self.bonus_throw = 0
+        self.first_bonus_throw = 0
+        self.second_bonus_throw = 0
     
     def add_frame(self, frame: Frame) -> None:
 
@@ -31,26 +32,39 @@ class BowlingGame:
             if frame.is_spare():
 
                 if i == len(self.frames) - 1:
-                    frame.set_bonus(self.bonus_throw)
+                    frame.set_bonus(self.first_bonus_throw)
                 else:
                     frame.set_bonus(self.frames[i + 1].get_first_throw())
 
             if frame.is_strike():
-                next_frame = self.frames[i + 1]
-                bonus = next_frame.get_first_throw() + next_frame.get_second_throw()
 
-                if next_frame.is_strike():
-                    next_frame = self.frames[i + 2]
-                    frame.set_bonus(bonus + next_frame.get_first_throw())
+                if i == len(self.frames) - 1:
+                    frame.set_bonus(self.first_bonus_throw + self.second_bonus_throw)
                 else:
-                    frame.set_bonus(bonus)
+
+                    next_frame = self.frames[i + 1]
+                    bonus = next_frame.get_first_throw() + next_frame.get_second_throw()
+
+                    if i == len(self.frames) - 2:
+
+                        if next_frame.is_strike:
+                            frame.set_bonus(bonus + self.first_bonus_throw)
+                        else:
+                            frame.set_bonus(bonus)
+
+                    else:
+                        if next_frame.is_strike():
+                            next_frame = self.frames[i + 2]
+                            frame.set_bonus(bonus + next_frame.get_first_throw())
+                        else:
+                            frame.set_bonus(bonus)
 
             score += frame.score()
 
         return score
 
     def set_first_bonus_throw(self, bonus_throw: int) -> None:
-        self.bonus_throw = bonus_throw
+        self.first_bonus_throw = bonus_throw
 
     def set_second_bonus_throw(self, bonus_throw: int) -> None:
-        pass
+        self.second_bonus_throw = bonus_throw
