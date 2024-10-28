@@ -110,5 +110,5 @@ class TestBowlingGame(unittest.TestCase):
         game.add_frame(Frame(8, 1))
         game.add_frame(Frame(2, 6))
 
-        # As this game contains a spare, the score should be 94
+        # As this game contains a strike followed by a spare, the score should be 103
         self.assertEqual(103, game.calculate_score())
