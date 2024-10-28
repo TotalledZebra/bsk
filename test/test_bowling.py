@@ -149,3 +149,22 @@ class TestBowlingGame(unittest.TestCase):
 
         # As this game contains multiple spares, the score should be 98
         self.assertEqual(98, game.calculate_score())
+
+    def test_calculate_score_with_spare_on_last_frame(self):
+
+        game = BowlingGame()
+
+        game.add_frame(Frame(1, 5))
+        game.add_frame(Frame(3, 6))
+        game.add_frame(Frame(7, 2))
+        game.add_frame(Frame(3, 6))
+        game.add_frame(Frame(4, 4))
+        game.add_frame(Frame(5, 3))
+        game.add_frame(Frame(3, 3))
+        game.add_frame(Frame(4, 5))
+        game.add_frame(Frame(8, 1))
+        game.add_frame(Frame(2, 8))
+
+        game.set_first_bonus_throw(7)
+
+        self.assertEqual(90, game.calculate_score())

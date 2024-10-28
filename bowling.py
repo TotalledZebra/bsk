@@ -6,6 +6,7 @@ class BowlingGame:
 
     def __init__(self):
         self.frames = []
+        self.bonus_throw = 0
     
     def add_frame(self, frame: Frame) -> None:
 
@@ -28,7 +29,11 @@ class BowlingGame:
         for i, frame in enumerate(self.frames):
 
             if frame.is_spare():
-                frame.set_bonus(self.frames[i + 1].get_first_throw())
+
+                if i == len(self.frames) - 1:
+                    frame.set_bonus(self.bonus_throw)
+                else:
+                    frame.set_bonus(self.frames[i + 1].get_first_throw())
 
             if frame.is_strike():
                 next_frame = self.frames[i + 1]
@@ -45,7 +50,7 @@ class BowlingGame:
         return score
 
     def set_first_bonus_throw(self, bonus_throw: int) -> None:
-        pass
+        self.bonus_throw = bonus_throw
 
     def set_second_bonus_throw(self, bonus_throw: int) -> None:
         pass
