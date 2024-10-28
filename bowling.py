@@ -24,8 +24,14 @@ class BowlingGame:
     def calculate_score(self) -> int:
 
         score = 0
+        was_spare = False
 
         for frame in self.frames:
+
+            if was_spare:
+                score += frame.get_first_throw()
+
+            was_spare = frame.is_spare()
             score += frame.score()
 
         return score
